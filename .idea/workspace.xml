@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="704b0495-8722-443a-a8b2-eacdde14f702" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/fuzzer/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fuzzer/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fuzzer/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fuzzer/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fuzzer/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fuzzer/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/jar/jacocoagent.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/jar/jacococli.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/jar/mariadb-java-client-3.1.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/jar/mysql-connector-j-8.0.33.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/jar/org.jacoco.core-0.8.10.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/Driver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/ExecutionDataServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/FuzzDriver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/GlobalConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/conn/MyConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/conn/MyConnectionLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/connector/Connector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/result/BatchResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/result/ErrorResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/result/NormalResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/result/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/model/result/UpdateResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/mutator/Block.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/mutator/Func.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/mutator/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/mutator/arg/Arg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/mutator/arg/SqlArg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/util/FileUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/coni/util/MyJarUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/resources/log4j2.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2TZ956Ej7TGnxnr0sxNSpQcJ7Qo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/dwenking/Git/coni"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="704b0495-8722-443a-a8b2-eacdde14f702" name="Changes" comment="" />
+      <created>1691239549441</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691239549441</updated>
+    </task>
+    <servers />
+  </component>
+</project>
