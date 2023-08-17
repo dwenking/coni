@@ -32,7 +32,7 @@ public class Executor {
        }
     }
 
-    public Executor(Random r, String owner, String db) throws SQLException {
-        this.conn = new Conn(r, owner, db);
+    public Executor(Random r, String owner, String db, String config) throws SQLException {
+        this.conn = new Conn(r, owner, db, config);
     }
 }

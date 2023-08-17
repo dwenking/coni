@@ -109,16 +109,16 @@ public class Conn {
         return true;
     }
 
-    public Conn(Random r, String jdbc, String db) throws SQLException {
+    public Conn(Random r, String jdbc, String db, String config) throws SQLException {
         this.r = r;
         this.owner = jdbc;
         this.db = db;
-        initConnAndSchema(jdbc, db);
+        initConnAndSchema(jdbc, db, config);
     }
 
-    private void initConnAndSchema(String jdbc, String db) throws SQLException {
-        String config = ConnectorUtil.getRandomUrlConfig(r);
-        String url = String.format("jdbc:%s://%s:%s/%s?user=%s&password=%s", jdbc, host, port, db, username, password, config);
+    private void initConnAndSchema(String jdbc, String db, String config) throws SQLException {
+        // String config = ConnectorUtil.getRandomUrlConfig(r);
+        String url = String.format("jdbc:%s://%s:%s/%s?user=%s&password=%s&%s", jdbc, dbHost, dbPort, db, username, password, config);
 
         this.conn = DriverManager.getConnection(url);
         this.schema = new GlobalSchema(this.conn, db, r);

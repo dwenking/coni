@@ -11,7 +11,7 @@ public class ConnLogger extends Conn {
     private static final String logPath = "logs/analysis/";
     private BufferedWriter writer;
 
-    public ConnLogger(Random r, String jdbc, String db) throws SQLException {
-        super(r, jdbc, db);
+    public ConnLogger(Random r, String jdbc, String db, String config) throws SQLException {
+        super(r, jdbc, db, config);
     }
 }

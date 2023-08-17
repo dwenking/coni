@@ -15,12 +15,27 @@ import java.util.List;
 public class FileUtil {
     private static final Logger logger = LogManager.getLogger("FileUtil");
 
+    public static List<Seed> readSeedsFromString(String input) throws IllegalArgumentException{
+        List<Seed> seeds = new ArrayList<>();
+
+        if (input.isEmpty()) {
+            return seeds;
+        }
+
+        String[] lines = input.split("\n");
+        for (String line : lines) {
+            String[] tmp = line.split(";\\@");
+            seeds.add(new Seed(tmp));
+        }
+        return seeds;
+    }
+
     public static List<Seed> readSeedsFromFile(String file) {
         List<Seed> seeds = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] tmp = line.split(";\\$");
+                String[] tmp = line.split(";\\@");
                 try {
                     seeds.add(new Seed(tmp));
                 } catch (IllegalArgumentException e) {
@@ -31,6 +46,26 @@ public class FileUtil {
             logger.error("Read {} error", file);
         }
         return seeds;
+    }
+
+    public static void resetFuzzLog(String path, String folderName) {
+        File[] files = new File(path).listFiles();
+        int fileCount = files.length;
+
+        File folder = new File(path + folderName);
+
+        if (folder.exists() && folder.isDirectory()) {
+            String newFolderName = path + folderName + (fileCount - 1);
+            File newFolder = new File(newFolderName);
+
+            if (folder.renameTo(newFolder)) {
+                logger.info("Log reset success");
+            } else {
+                logger.error("Log reset failed");
+            }
+        } else {
+            logger.error("No log files");
+        }
     }
 
     public static List<String> generateSQLFromFile(String fileContent) {
@@ -85,7 +120,7 @@ public class FileUtil {
 
     public static void deleteFolder(File folder) {
         File[] files = folder.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
+        if (files != null) {
             for (File f : files) {
                 if(f.isDirectory()) {
                     deleteFolder(f);

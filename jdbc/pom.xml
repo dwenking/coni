@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
+            <artifactId>org.jacoco.core</artifactId>
             <version>0.8.10</version>
         </dependency>
         <dependency>
