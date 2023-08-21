@@ -7,13 +7,18 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
+import coni.connector.input.BatchSql;
+import coni.connector.input.Sql;
+import coni.fuzzer.Seed;
+import coni.fuzzer.arg.ConfigArg;
+import coni.fuzzer.mutator.MutExecutor;
 import coni.util.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jacoco.core.analysis.Analyzer;
+import org.jacoco.core.analysis.CoverageBuilder;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.IExecutionDataVisitor;
 import org.jacoco.core.data.ISessionInfoVisitor;
@@ -21,6 +26,7 @@ import org.jacoco.core.data.SessionInfo;
 import org.jacoco.core.runtime.RemoteControlReader;
 
 import static coni.GlobalConfiguration.*;
+import static coni.fuzzer.Dict.initDict;
 
 /**
  * fuzz entry
@@ -32,28 +38,41 @@ public final class Server {
     public static void main(final String[] args) throws IOException {
         final ServerSocket server = new ServerSocket(serverPort, 0,
                 InetAddress.getByName(serverHost));
-
         File seedFolder = new File(seedPath);
-        Queue<String> que = new LinkedList<>();
+        initDict();
+        MutExecutor mutator = new MutExecutor();
+        List<Seed> que = new ArrayList<>();
 
         for (File f : seedFolder.listFiles()) {
-            que.add(Files.readString(f.toPath()));
+            que.add(FileUtil.readSeedsFromFile(f.getPath()));
         }
 
-        long fuzzTime = 120000;
-        long targetTime = System.currentTimeMillis() + fuzzTime;
+        //long fuzzTime = 120000;
+        //long targetTime = System.currentTimeMillis() + fuzzTime;
+        int epoch = 0;
         int id = 0;
         logger.info("Start Fuzzing...");
 
-        while (!que.isEmpty() && System.currentTimeMillis() < targetTime) {
-            String cur = que.poll();
-            logger.info("Start Process " + id + "...");
-            startProcess(cur, id++);
-            final Handler handler = new Handler(server.accept(), covData);
-            boolean update = handler.updateCov();
-            if (update) {
-                logger.info("Coverage update: {} connector {} / {}, {} connector {} / {}", jdbc1, covData[0], covData[1], jdbc2, covData[2], covData[3]);
+        while (!que.isEmpty() && epoch < 20) {
+            List<Seed> cur = null;
+            if (epoch == 0) {
+                cur = que;
             }
+            else {
+                cur = mutator.mutate(que);
+            }
+            for (Seed s : cur) {
+                startProcess(s.toString(), id++);
+                final Handler handler = new Handler(server.accept(), covData);
+                boolean update = handler.updateCov();
+                if (update) {
+                    logger.info("Epoch {}, Coverage update: {} connector {} / {}, {} connector {} / {}", epoch, jdbc1, covData[0], covData[1], jdbc2, covData[2], covData[3]);
+                    if (epoch != 0) {
+                        que.add(s);
+                    }
+                }
+            }
+            epoch++;
         }
 
         FileUtil.resetFuzzLog(logPath, "fuzz");
@@ -105,7 +124,9 @@ public final class Server {
             this.socket = socket;
             this.covData = covData;
             if (covData[1] > 0 || covData[3] > 0) {
-                hasSum = true;
+                //hasSum = true;
+                covData[1] = 0;
+                covData[3] = 0;
             }
             this.reader = new RemoteControlReader(socket.getInputStream());
             this.reader.setSessionInfoVisitor(this);

@@ -1,7 +1,12 @@
-package coni.executor.arg;
+package coni.fuzzer.arg;
 
+import coni.fuzzer.FuncSeed;
+
+/**
+ * Store value and type info
+ */
 public class Arg {
-    private Class<?> type;
+    private final Class<?> type;
     private Object value;
 
     public Arg mutate(){return this;};
@@ -15,9 +20,6 @@ public class Arg {
         return type;
     }
 
-    public void setType(Class<?> type) {
-        this.type = type;
-    }
 
     public Object getValue() {
         return value;
@@ -25,5 +27,10 @@ public class Arg {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
     }
 }

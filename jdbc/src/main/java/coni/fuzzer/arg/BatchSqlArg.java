@@ -1,9 +1,6 @@
-package coni.executor.arg;
+package coni.fuzzer.arg;
 
 import coni.connector.input.BatchSql;
-import coni.connector.input.Sql;
-
-import java.util.Arrays;
 
 public class BatchSqlArg extends Arg{
 

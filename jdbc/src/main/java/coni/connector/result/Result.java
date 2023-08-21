@@ -56,7 +56,9 @@ public abstract class Result {
             all.append(sql);
             all.append(",");
         }
-        all.deleteCharAt(all.length() - 1);
+        if (!all.isEmpty()) {
+            all.deleteCharAt(all.length() - 1);
+        }
         this.all = all.toString();
     }
 }

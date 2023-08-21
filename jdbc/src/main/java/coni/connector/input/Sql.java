@@ -9,4 +9,9 @@ public class Sql {
     public Sql(String sql) {
         this.sql = sql;
     }
+
+    @Override
+    public String toString() {
+        return sql;
+    }
 }

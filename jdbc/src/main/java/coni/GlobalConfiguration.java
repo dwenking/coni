@@ -1,6 +1,13 @@
 package coni;
 
 
+import coni.connector.input.BatchSql;
+import coni.connector.input.Sql;
+import coni.fuzzer.arg.ConfigArg;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class GlobalConfiguration {
     /**
      * File configurations
@@ -8,6 +15,7 @@ public class GlobalConfiguration {
     public static final String logPath = "log/";
     public static final String seedPath = "src/main/resources/seeds/";
     public static final String outPath = "out/";
+    public static final String seedDelimiter = "@;";
 
     /**
      * Connection configurations

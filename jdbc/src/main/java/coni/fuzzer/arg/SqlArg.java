@@ -1,4 +1,4 @@
-package coni.executor.arg;
+package coni.fuzzer.arg;
 
 
 import coni.connector.input.Sql;

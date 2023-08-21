@@ -1,6 +1,7 @@
 package coni.util;
 
-import coni.executor.Seed;
+import coni.fuzzer.FuncSeed;
+import coni.fuzzer.Seed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,34 +11,37 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import static coni.GlobalConfiguration.seedDelimiter;
 
 public class FileUtil {
     private static final Logger logger = LogManager.getLogger("FileUtil");
 
-    public static List<Seed> readSeedsFromString(String input) throws IllegalArgumentException{
-        List<Seed> seeds = new ArrayList<>();
+    public static Seed readSeedsFromString(String input) throws IllegalArgumentException{
+        List<FuncSeed> funcSeeds = new LinkedList<>();
 
         if (input.isEmpty()) {
-            return seeds;
+            return new Seed(funcSeeds);
         }
 
         String[] lines = input.split("\n");
         for (String line : lines) {
-            String[] tmp = line.split(";\\@");
-            seeds.add(new Seed(tmp));
+            String[] tmp = line.split(seedDelimiter);
+            funcSeeds.add(new FuncSeed(tmp));
         }
-        return seeds;
+        return new Seed(funcSeeds);
     }
 
-    public static List<Seed> readSeedsFromFile(String file) {
-        List<Seed> seeds = new ArrayList<>();
+    public static Seed readSeedsFromFile(String file) {
+        List<FuncSeed> funcSeeds = new LinkedList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] tmp = line.split(";\\@");
+                String[] tmp = line.split(seedDelimiter);
                 try {
-                    seeds.add(new Seed(tmp));
+                    funcSeeds.add(new FuncSeed(tmp));
                 } catch (IllegalArgumentException e) {
                     logger.error("Seed {} has wrong format", line);
                 }
@@ -45,7 +49,7 @@ public class FileUtil {
         } catch (IOException e) {
             logger.error("Read {} error", file);
         }
-        return seeds;
+        return new Seed(funcSeeds);
     }
 
     public static void resetFuzzLog(String path, String folderName) {

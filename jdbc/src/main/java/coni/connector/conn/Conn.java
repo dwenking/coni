@@ -21,7 +21,6 @@ import static coni.GlobalConfiguration.*;
  * Wrapper for many jdbc scenarios
  */
 public class Conn {
-
     protected Random r;
     protected String owner;
     protected String db;
@@ -65,7 +64,7 @@ public class Conn {
     }
 
     public Result executeBatch(BatchSql bs) {
-        Sql[] sqls = bs.sqls;
+        List<Sql> sqls = bs.sqls;
         List<String> tmp = new ArrayList<>();
         try (Statement stmt= this.conn.createStatement()){
             for (Sql s : sqls) {
@@ -117,7 +116,6 @@ public class Conn {
     }
 
     private void initConnAndSchema(String jdbc, String db, String config) throws SQLException {
-        // String config = ConnectorUtil.getRandomUrlConfig(r);
         String url = String.format("jdbc:%s://%s:%s/%s?user=%s&password=%s&%s", jdbc, dbHost, dbPort, db, username, password, config);
 
         this.conn = DriverManager.getConnection(url);
