@@ -26,7 +26,7 @@ public class Client {
 
     public static void main(String[] args) {
         if (args.length == 2) {
-            //System.out.println(args[0]);
+            logger.error("Process {} start...", args[1]);
             initDict();
             Seed se = FileUtil.readSeedsFromString(args[0]);
             List<FuncSeed> seed = se.getFuncSeeds();
@@ -34,7 +34,7 @@ public class Client {
             FuncExecutor exec1 = null, exec2 = null;
 
             try {
-                if (seed.size() > 0 && "config".equals(seed.get(0).getMethod())) {
+                if (seed.size() > 0 && seed.get(0).getMethod().contains("config")) {
                     String config = seed.get(0).getArgs().get(0).toString();
                     exec1 = new FuncExecutor(new Random(Long.parseLong(id)), jdbc1, iniDatabase, config);
                     exec2 = new FuncExecutor(new Random(Long.parseLong(id)), jdbc2, iniDatabase, config);
@@ -43,24 +43,36 @@ public class Client {
                     exec2 = new FuncExecutor(new Random(Long.parseLong(id)), jdbc2, iniDatabase, "");
                 }
             } catch (SQLException e) {
-                logger.error("Connecting to 0 {} failed, e:{}", iniDatabase, e.getMessage());
+                logger.error("Connecting to {} failed, e:{}", iniDatabase, e.getMessage());
                 return;
             }
 
-            logger.info("Process {} start...", id);
             List<Result> res1 = new ArrayList<>();
             List<Result> res2 = new ArrayList<>();
             for (FuncSeed funcSeed : seed) {
-                if ("config".equals(funcSeed.getMethod())) {
+                if (funcSeed.getMethod().contains("config")) {
                     continue;
                 }
                 res1.add(exec1.exec(funcSeed));
             }
+
+            try {
+                exec1.closeConn();
+            } catch (SQLException e) {
+                logger.error("{} Connector Close connection failed, e:{}", jdbc1, e.getMessage());
+            }
+
             for (FuncSeed funcSeed : seed) {
-                if ("config".equals(funcSeed.getMethod())) {
+                if (funcSeed.getMethod().contains("config")) {
                     continue;
                 }
                 res2.add(exec2.exec(funcSeed));
+            }
+
+            try {
+                exec2.closeConn();
+            } catch (SQLException e) {
+                logger.error("{} Connector Close connection failed, e:{}", jdbc2, e.getMessage());
             }
 
             boolean isDifferent = false;
@@ -83,7 +95,7 @@ public class Client {
             if (isDifferent) {
                 try (FileWriter writer = new FileWriter(outPath + id)) {
                     writer.write(args[0]);
-                    logger.info("Writing seed succeed");
+                    logger.info("Writing diff seed succeed");
                 } catch (IOException e) {
                     logger.error("Writing seed to {} fail, e:{}", outPath + id, e.getMessage());
                 }

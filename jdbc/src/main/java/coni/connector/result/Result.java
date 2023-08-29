@@ -54,7 +54,7 @@ public abstract class Result {
         StringBuffer all = new StringBuffer();
         for (String sql : sqls) {
             all.append(sql);
-            all.append(",");
+            all.append(";");
         }
         if (!all.isEmpty()) {
             all.deleteCharAt(all.length() - 1);

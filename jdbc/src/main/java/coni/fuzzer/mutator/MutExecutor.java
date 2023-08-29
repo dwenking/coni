@@ -25,6 +25,6 @@ public class MutExecutor {
 
     public MutExecutor() {
         this.r = new Random();
-        this.mutators = new Mutator[]{new SwapMutator(r), new DelMutator(r)};
+        this.mutators = new Mutator[]{new ConfigMutator(r), new MethodMutator(r)};
     }
 }

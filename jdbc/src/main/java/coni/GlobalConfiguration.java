@@ -10,14 +10,6 @@ import java.util.Map;
 
 public class GlobalConfiguration {
     /**
-     * File configurations
-     */
-    public static final String logPath = "log/";
-    public static final String seedPath = "src/main/resources/seeds/";
-    public static final String outPath = "out/";
-    public static final String seedDelimiter = "@;";
-
-    /**
      * Connection configurations
      */
     public static final String dbHost = "localhost";
@@ -31,6 +23,7 @@ public class GlobalConfiguration {
      */
     public static final String maven = "/Users/dwenking/.m2/repository";
     public static final String project = "/Users/dwenking/Git/coni/jdbc";
+    public static final String testDB = "mysql";
     public static final String jdbc1 = "mariadb";
     public static final String jdbc2 = "mysql";
     public static final String packagePrefix1 = "com/mysql";
@@ -41,5 +34,13 @@ public class GlobalConfiguration {
      */
     public static final String serverHost = "localhost";
     public static final int serverPort = 6300;
+
+    /**
+     * File configurations
+     */
+    public static final String logPath = "log/";
+    public static final String seedPath = "src/main/resources/seeds/" + testDB;
+    public static final String outPath = "out/";
+    public static final String seedDelimiter = "@;";
 }
 

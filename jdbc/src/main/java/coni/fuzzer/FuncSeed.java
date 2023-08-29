@@ -28,12 +28,18 @@ public class FuncSeed {
     public FuncSeed(String[] origin) throws IllegalArgumentException{
         this.method = origin[0];
         Class<?>[] argType = methodDict.get(method);
-        if (origin == null || origin.length < 1 ||
-                !methodDict.containsKey(origin[0]) || argType.length != origin.length - 1) {
-            throw new IllegalArgumentException("Illegal Seeds " + origin[0]);
+        this.args = new LinkedList<>();
+
+        if (method.contains("config") && origin.length == 1) {
+            this.args.add(ArgFactory.create(argType[0]));
+            return;
         }
 
-        this.args = new LinkedList<>();
+        if (origin == null || origin.length < 1 ||
+                !methodDict.containsKey(origin[0]) || argType.length != origin.length - 1) {
+            throw new IllegalArgumentException("Illegal Seeds " + origin[0] + "...");
+        }
+
         for (int i = 0; i < argType.length; i++) {
             this.args.add(ArgFactory.create(argType[i], origin[i + 1]));
         }

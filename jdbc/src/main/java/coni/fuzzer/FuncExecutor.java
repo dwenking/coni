@@ -1,6 +1,8 @@
 package coni.fuzzer;
 
 import coni.connector.conn.Conn;
+import coni.connector.conn.MySQLConn;
+import coni.connector.conn.PostgresConn;
 import coni.connector.result.Result;
 import coni.fuzzer.arg.Arg;
 
@@ -9,6 +11,8 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
+
+import static coni.GlobalConfiguration.testDB;
 
 /**
  * execute funcseed
@@ -43,7 +47,17 @@ public class FuncExecutor {
         return res;
     }
 
+    public void closeConn() throws SQLException {
+        this.conn.closeConn();
+    }
+
     public FuncExecutor(Random r, String owner, String db, String config) throws SQLException {
-        this.conn = new Conn(r, owner, db, config);
+        if (testDB.equals("mysql")) {
+            this.conn = new MySQLConn(r, owner, db, config);
+        } else if (testDB.equals("postgres")) {
+            this.conn = new PostgresConn(r, owner, db, config);
+        } else {
+            throw new IllegalArgumentException("Unsupported db: " + testDB);
+        }
     }
 }

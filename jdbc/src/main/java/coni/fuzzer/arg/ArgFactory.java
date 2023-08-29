@@ -20,4 +20,13 @@ public class ArgFactory {
             throw new IllegalArgumentException("Illegal Arg Type: " + type + ", " + value);
         }
     }
+
+    public static Arg create(Class<?> type) throws IllegalArgumentException{
+        if (type.equals(Config.class)) {
+            return new ConfigArg("");
+        }
+        else {
+            throw new IllegalArgumentException("Illegal Arg Type: " + type);
+        }
+    }
 }

@@ -53,7 +53,7 @@ public final class Server {
         int id = 0;
         logger.info("Start Fuzzing...");
 
-        while (!que.isEmpty() && epoch < 20) {
+        while (!que.isEmpty() && epoch < 5) {
             List<Seed> cur = null;
             if (epoch == 0) {
                 cur = que;
@@ -101,12 +101,12 @@ public final class Server {
 
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                logger.info("Process " + id + " exit...");
+                logger.error("Process " + id + " exit...");
             } else {
-                logger.info("Process " + id + " fail...");
+                logger.error("Process " + id + " fail...");
             }
         } catch (IOException | InterruptedException e) {
-            logger.info("Process " + id + " fail...");
+            logger.error("Process " + id + " fail...");
         }
     }
 

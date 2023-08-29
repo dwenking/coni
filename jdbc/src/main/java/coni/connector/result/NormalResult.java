@@ -47,6 +47,7 @@ public class NormalResult extends Result{
                     return false;
                 }
             }
+            return true;
         }
 
         return false;
