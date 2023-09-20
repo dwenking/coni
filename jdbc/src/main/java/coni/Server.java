@@ -116,18 +116,13 @@ public final class Server {
         private final Socket socket;
         private final RemoteControlReader reader;
         private int[] covData;
-        private int cur1 = 0, cur2 = 0;
+        private int cur1 = 0, sum1 = 0, cur2 = 0, sum2 = 0;
         private boolean hasSum = false;
 
         Handler(final Socket socket, int[] covData)
                 throws IOException {
             this.socket = socket;
             this.covData = covData;
-            if (covData[1] > 0 || covData[3] > 0) {
-                //hasSum = true;
-                covData[1] = 0;
-                covData[3] = 0;
-            }
             this.reader = new RemoteControlReader(socket.getInputStream());
             this.reader.setSessionInfoVisitor(this);
             this.reader.setExecutionDataVisitor(this);
@@ -139,10 +134,15 @@ public final class Server {
                 }
                 socket.close();
                 boolean update = false;
-                if (cur1 > covData[0] || cur2 > covData[2]) {
+                if ((long)cur1 * covData[2] > (long)covData[0] * sum1) {
                     update = true;
-                    covData[0] = Integer.max(cur1, covData[0]);
-                    covData[2] = Integer.max(cur2, covData[2]);
+                    covData[0] = cur1;
+                    covData[2] = sum1;
+                }
+                if ((long)cur2 * covData[3] > (long)covData[1] * sum2) {
+                    update = true;
+                    covData[1] = cur2;
+                    covData[3] = sum2;
                 }
                 return update;
             } catch (final IOException e) {
@@ -158,16 +158,11 @@ public final class Server {
             String name = data.getName();
             if (name.startsWith(packagePrefix1)) {
                 cur1 += Integer.valueOf(getHitCount(data.getProbes()));
-                if (!hasSum) {
-                    covData[1] += data.getProbes().length;
-                }
-
+                sum1 += data.getProbes().length;
             }
             else if (name.startsWith(packagePrefix2)){
                 cur2 += Integer.valueOf(getHitCount(data.getProbes()));
-                if (!hasSum) {
-                    covData[3] += data.getProbes().length;
-                }
+                sum2 += data.getProbes().length;
             }
         }
 

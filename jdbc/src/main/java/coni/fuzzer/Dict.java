@@ -19,8 +19,10 @@ public class Dict {
         methodDict.put("execute", new Class<?>[]{Sql.class});
         methodDict.put("executeBatch", new Class<?>[]{BatchSql.class});
         methodDict.put("executeBatchPreparedInsert", new Class<?>[]{});
+        methodDict.put("executeBatchInsert", new Class<?>[]{});
 
         randomMethod.add("executeBatchPreparedInsert");
+        randomMethod.add("executeBatchInsert");
 
         String[] boolArr = new String[]{"true", "false"};
         mysqlConfigDict.put("allowMultiQueries", boolArr);

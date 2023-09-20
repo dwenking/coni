@@ -2,7 +2,7 @@ mysqlconfig@;
 execute@;DROP DATABASE IF EXISTS test;
 execute@;CREATE DATABASE test;
 execute@;USE test;
-execute@;CREATE TABLE t0(c0 REAL SIGNED  PRIMARY KEY NOT NULL) engine=InnoDB;
+execute@;CREATE TABLE t0(c0 REAL SIGNED PRIMARY KEY NOT NULL) engine=InnoDB;
 execute@;INSERT INTO t0 VALUES (1670697762);
 executeBatch@;INSERT INTO t0 VALUES (1670697762);INSERT INTO t0 VALUES (70697763)
 execute@;SELECT * FROM t0;

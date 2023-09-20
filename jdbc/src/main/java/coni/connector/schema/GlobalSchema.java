@@ -11,11 +11,11 @@ import java.util.Random;
 /**
  * Provide schema info and utils
  */
-public class GlobalSchema {
-    private Connection con;
-    private String db;
-    private List<Table> dbTables;
-    private Random r;
+public abstract class GlobalSchema {
+    protected Connection con;
+    protected String db;
+    protected List<Table> dbTables;
+    protected Random r;
 
     public void renewTables() throws SQLException {
         this.dbTables.clear();
@@ -44,6 +44,23 @@ public class GlobalSchema {
         return dbTables.get(randomIndex);
     }
 
+    public String genTableRandomInsert(Table table) {
+        String name = table.getName();
+        List<Column> cols = table.getCols();
+        StringBuffer tmp = new StringBuffer("INSERT INTO ");
+        tmp.append(name);
+        int col = cols.size();
+        for (int i = 0; i < col; i++) {
+            if (i > 0) {
+                tmp.append(", ");
+            }
+            tmp.append(generateColumnValueByType(cols.get(i).getType()));
+        }
+        tmp.append(");");
+
+        return tmp.toString();
+    }
+
     public String genTablePreparedInsert(Table table) {
         String name = table.getName();
         int col = table.getCols().size();
@@ -57,6 +74,8 @@ public class GlobalSchema {
 
         return tmp.toString();
     }
+
+    public abstract Object generateColumnValueByType(String colType);
 
     public GlobalSchema(Connection con, String db, Random r) {
         this.con = con;
